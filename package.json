@@ -4,7 +4,7 @@
   "description": "An opinionated wrapper for electron ipc communications.",
   "repository": "git@github.com:krimlabs/eiphop.git",
   "author": "Shivek Khurana <khuranashivek@outlook.com>",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "types": "index.d.ts",
   "license": "MIT",
   "scripts": {
