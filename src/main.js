@@ -14,7 +14,7 @@ const isPromise = (obj) => {
 	return !!obj && (typeof obj === 'object' || typeof obj === 'function') && typeof obj.then === 'function';
 };
 
-export const setupMainHandler = (electronModule, availableActions, enableLogs = false) => {
+export const setupMainHandler = (electronModule, availableActions, enableLogs = false, onError = (() => {})) => {
 	enableLogs && log.info('Logs enabled !');
 	electronModule.ipcMain.on('asyncRequest', (event, requestId, action, payload) => {
 		enableLogs && log.info(`Got new request with id = ${requestId}, action = ${action}`, payload);
@@ -41,12 +41,14 @@ export const setupMainHandler = (electronModule, availableActions, enableLogs = 
 				promise.catch((e) => {
 					//error in async code
 					log.error(e);
+					onError(e);
 					res.error({error: e.toString()});
 				})
 			}
 		} catch (e) {
 			//error inside sync code
 			log.error(e);
+			onError(e);
 			res.error({error: e.toString()});
 		}
 	})

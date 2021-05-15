@@ -44,13 +44,19 @@ Actions from different domain objects need to be combined to one global map and 
 import {setupMainHandler} from 'eiphop';
 import electron from 'electron';
 
-setupMainHandler(electron, {...hipActions, ...pingActions}, true);
+setupMainHandler(
+  electron,
+  {...hipActions, ...pingActions},
+  true,
+  ((err) => { /* Report err to error-monitoring service, etc */ }),
+);
 ```
 `setupMainHandler`  takes three arguments:
 
 1.  The electron module to use
 2.  The actions map to expose (the above example exposes two actions :  `{ping: function(), hip: function()}`)
 3.  Enable logging flag (false by default).
+4.  onError callback (not present by default).
 
 #### Setup Renderer Listener
 In your renderer’s index.js file, setup the listener as follows:
